@@ -1,49 +1,15 @@
 module Main exposing (..)
 
-import Html exposing (Html, text, div, img)
-import Html.Attributes exposing (src)
-
-
----- MODEL ----
-
-
-type alias Model =
-    {}
+import Model exposing (Model)
+import Init exposing (initialModel)
+import Update exposing (Msg(..), update)
+import View exposing (view)
+import Html exposing (Html)
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( {}, Cmd.none )
-
-
-
----- UPDATE ----
-
-
-type Msg
-    = NoOp
-
-
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    ( model, Cmd.none )
-
-
-
----- VIEW ----
-
-
-view : Model -> Html Msg
-view model =
-    div []
-        [ img [ src "/logo.svg" ] []
-        , div [] [ text "Your Elm App is working!" ]
-        ]
-
-
-
----- PROGRAM ----
-
+    ( initialModel, Cmd.none )
 
 main : Program Never Model Msg
 main =

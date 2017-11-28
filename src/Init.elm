@@ -1,20 +1,30 @@
-module Init exposing (initialModel, initialContents, cmEnvPH, secretEnvPH)
+module Init exposing (cmEnvPH, initialInputs, initialModel, secretEnvPH)
 
 import Model exposing (Model)
 import Pages.EnvVars.Generator exposing (gen)
 
+
 cmEnvPH =
-    "CM_KEY1=cm-val1\nCM_KEY2=cm-val2"
+    { name = "new-cm"
+    , namespace = "your-namespace"
+    , content = "CM_KEY1=cm-val1\nCM_KEY2=cm-val2"
+    }
+
 
 secretEnvPH =
-    "SEC_KEY1=sec-val1\nSEC_KEY2=sec-val2"
+    { name = "new-secret"
+    , namespace = "your-namespace"
+    , content = "SEC_KEY1=sec-val1\nSEC_KEY2=sec-val2"
+    }
 
-initialContents =
+
+initialInputs =
     { cm = cmEnvPH
     , secret = secretEnvPH
     }
 
+
 initialModel =
-    { contents = initialContents
-    , results = gen initialContents
+    { inputs = initialInputs
+    , results = gen initialInputs
     }

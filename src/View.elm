@@ -1,9 +1,10 @@
 module View exposing (view)
 
+import Html exposing (Html, div, h1, text)
 import Model exposing (Model)
-import Update exposing (Msg(..))
-import Html exposing (Html, h1, div, text)
 import Pages.EnvVars as EnvVars
+import Update exposing (Msg(..))
+
 
 view : Model -> Html Msg
 view model =

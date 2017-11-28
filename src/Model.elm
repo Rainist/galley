@@ -1,18 +1,27 @@
-module Model exposing (Model, Contents, Results)
+module Model exposing (Inputs, Model, Results)
 
-type alias Contents =
-    { cm: String
-    , secret: String
+
+type alias ObjectInput =
+    { name : String
+    , namespace : String
+    , content : String
     }
+
+
+type alias Inputs =
+    { cm : ObjectInput
+    , secret : ObjectInput
+    }
+
 
 type alias Results =
-    { cm: String
-    , secret: String
-    , env: String
+    { cm : String
+    , secret : String
+    , env : String
     }
+
 
 type alias Model =
-    { contents: Contents
-    , results: Results
+    { inputs : Inputs
+    , results : Results
     }
-

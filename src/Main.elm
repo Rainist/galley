@@ -1,15 +1,16 @@
 module Main exposing (..)
 
-import Model exposing (Model)
+import Html exposing (Html)
 import Init exposing (initialModel)
+import Model exposing (Model)
 import Update exposing (Msg(..), update)
 import View exposing (view)
-import Html exposing (Html)
 
 
 init : ( Model, Cmd Msg )
 init =
     ( initialModel, Cmd.none )
+
 
 main : Program Never Model Msg
 main =

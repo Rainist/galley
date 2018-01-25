@@ -1,7 +1,7 @@
-module Init exposing (cmEnvPH, initialInputs, initialModel, secretEnvPH)
+module Elm.Recipe.EnvMapper.Init exposing (cmEnvPH, initialInputs, initialModel, secretEnvPH)
 
-import Model exposing (Model)
-import Pages.EnvVars.Generator exposing (gen)
+import Elm.Recipe.EnvMapper.Model exposing (Model)
+import Elm.Recipe.EnvMapper.Generator exposing (gen)
 
 
 cmEnvPH =

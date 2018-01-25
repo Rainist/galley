@@ -1,13 +1,16 @@
-module Update exposing (Msg(..), update)
+port module Elm.Recipe.EnvMapper.Update exposing (Msg(..), update, listen)
 
 import Focus exposing ((=>), Focus, create, set)
-import Init exposing (initialInputs)
-import Model exposing (Model)
-import Pages.EnvVars.Generator exposing (gen)
+import Elm.Recipe.EnvMapper.Init exposing (initialInputs)
+import Elm.Recipe.EnvMapper.Model exposing (Model, Results, Inputs)
+import Elm.Recipe.EnvMapper.Generator exposing (gen)
 
+port listen : (Inputs -> msg) -> Sub msg
+port echo : Results -> Cmd msg
 
 type Msg
-    = CMChange String
+    = Listen Inputs
+    | CMChange String
     | CMNameChange String
     | CMNamespaceChange String
     | SecChange String
@@ -20,6 +23,8 @@ update msg model =
     let
         newModel =
             case msg of
+                Listen inputs ->
+                    { model | inputs = inputs }
                 CMChange val ->
                     set (inputs => cm => content) val model
 
@@ -41,9 +46,11 @@ update msg model =
     let
         inputs =
             newModel.inputs
+        results =
+            gen inputs
     in
-    ( { newModel | results = gen inputs }
-    , Cmd.none
+    ( { newModel | results = results }
+    , echo results
     )
 
 

@@ -1,9 +1,8 @@
-module Pages.EnvVars.Generator exposing (gen)
+module Elm.Recipe.EnvMapper.Generator exposing (gen)
 
 import Base64 exposing (encode)
 import Maybe.Extra as Extra
-import Model exposing (Inputs, Results)
-
+import Elm.Recipe.EnvMapper.Model exposing (Inputs, Results)
 
 gen : Inputs -> Results
 gen { cm, secret } =

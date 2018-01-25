@@ -1,7 +1,9 @@
-import './main.css';
-import { Main } from './Main.elm';
-import registerServiceWorker from './registerServiceWorker';
+import Entry from './app/entry'
 
-Main.embed(document.getElementById('root'));
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
-registerServiceWorker();
+let element = document.getElementById('content');
+ReactDOM.render(React.createElement(Entry), element);
+
+document.body.classList.remove('loading');

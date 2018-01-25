@@ -1,13 +1,5 @@
 import React, { Component } from 'react';
-import Sidebar from 'grommet/components/Sidebar';
-import Menu from 'grommet/components/Menu';
-import Anchor from 'grommet/components/Anchor';
-import Button from 'grommet/components/Button';
-import User from 'grommet/components/icons/base/User';
-import Header from 'grommet/components/Header';
-import Title from 'grommet/components/Title';
-import Box from 'grommet/components/Box';
-import Footer from 'grommet/components/Footer';
+import { Sidebar, Title, Box, Footer, Header, Anchor, Button, Menu } from 'grommet'
 
 export default class AppMenu extends Component {
   render() {
@@ -32,7 +24,6 @@ export default class AppMenu extends Component {
           </Menu>
         </Box>
         <Footer pad='medium'>
-          <Button icon={<User />} />
         </Footer>
       </Sidebar>
     )

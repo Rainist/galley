@@ -13,7 +13,7 @@ const initialModel = {
     secret: {
       name: 'new-secret',
       env: 'key=value\nkey2=value2'
-    },
+    }
   }
 }
 

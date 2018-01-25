@@ -1,6 +1,5 @@
+import Rx from 'rxjs/Rx'
 import { Elm } from '../../Elm/Recipe/EnvMapper/Bridge'
-import Rx from 'rxjs/Rx';
-
 const Bridge = Elm.Recipe.EnvMapper.Bridge
 
 const initialModel = {
@@ -17,7 +16,7 @@ const initialModel = {
   }
 }
 
-const resultStream = new Rx.Subject()
+const resultStream = new Rx.Subject().sampleTime(100)
 
 const bridge = Bridge.worker()
 

@@ -3,33 +3,22 @@ import React, { Component } from 'react';
 import { Form, FormField, Header, Title, TextInput } from 'grommet'
 
 export default class EnvForm extends Component {
-  state = { name: '', env: '' };
-
-  componentDidMount() {
-    this.updateChange()
-  }
-
-  updateChange = () => {
-    const { props, state } = this
-    const { onChange, placeholder } = props
-
-    const filteredState = _.pickBy(state, item => !_.isEmpty(item))
-    const output = { ...placeholder, ...filteredState }
-
+  onChangeName = ({ target: { value: name }}) => {
+    const { props: { value: { env }, onChange } } = this
+    const output = { env, name }
     onChange(output)
   }
 
-  onChangeName = ({ target: { value: name }}) => {
-    this.setState({ name }, () => this.updateChange())
-  }
-
   onChangeEnv = ({ target: { value: env }}) => {
-    this.setState({ env }, () => this.updateChange())
+    const { props: { value: { name }, onChange } } = this
+    const output = { env, name }
+    onChange(output)
   }
 
   render () {
     const { props } = this
-    const { name, env } = props.placeholder
+    const { value, placeholder: ph } = props
+    const { name, env } = value
 
     return (
       <Form>
@@ -39,10 +28,10 @@ export default class EnvForm extends Component {
           </Title>
         </Header>
         <FormField label={`name for ${props.type}`}>
-          <TextInput placeHolder={name} onDOMChange={this.onChangeName} />
+          <TextInput placeHolder={ph.name} onDOMChange={this.onChangeName} value={name} />
         </FormField>
         <FormField label={`env for ${props.type}`}>
-          <textarea rows={10} placeholder={env} onChange={this.onChangeEnv} />
+          <textarea rows={10} placeholder={ph.env} onChange={this.onChangeEnv} value={env} />
         </FormField>
       </Form>
     )

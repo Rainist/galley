@@ -21,6 +21,8 @@ https://rainist.github.io/galley
 - [Webpack](https://webpack.js.org)
 - [grommet.io](http://grommet.io/)
 - [RxJS](http://reactivex.io/rxjs/)
+- [styled components](https://www.styled-components.com/)
+- [lodash](https://lodash.com/)
 - And others as described in [package.json](./package.json)
 
 

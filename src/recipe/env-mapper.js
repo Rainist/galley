@@ -10,14 +10,15 @@ import EnvForm from '../comp/env-form'
 import { onChangeInput, initialModel, resultStream } from './env-mapper/data-handler'
 
 const SectionHeaderStyle = styled.div`
-  padding-left: 3em;
-  padding-top: 0.5em;
+  padding: 0.5em 3em 0 3em;
 `;
 
 const { placeholder } = initialModel
+const emptyObject = { name: '', env: ''}
+const emptyInput = { namespace: '', cm: { ...emptyObject }, secret: { ...emptyObject }  }
 
 export default class EnvMapper extends Component {
-  state = { input: { ...placeholder }, output: {} };
+  state = { input: emptyInput, output: {} }
 
   componentDidMount() {
     resultStream.subscribe(result => {
@@ -25,16 +26,26 @@ export default class EnvMapper extends Component {
       const output = {cm, secret, snippet}
       this.setState({ output })
     });
+
+    this.calculate()
   }
 
   calculate = () => {
-    const { input } = this.state
+    const { input: oldInput } = this.state
+
+    const input = _.cloneDeep(oldInput)
     const self = this
 
-    const filteredInput = _.pickBy(input, item => !_.isEmpty(item))
-    const structuredInput = { ...placeholder, ...filteredInput }
+    const selectObj = (a, b) => {
+      if (_.isObject(a)){
+        return _.mergeWith(a, b, selectObj)
+      }
+      return a || b
+    }
 
-    onChangeInput(structuredInput)
+    const filledInput = _.mergeWith(input, placeholder, selectObj)
+
+    onChangeInput(filledInput)
   }
 
   onChangeNS = ({ target: { value: namespace }}) => {
@@ -54,25 +65,28 @@ export default class EnvMapper extends Component {
 
   render() {
     const { input, output } = this.state
+    const ph = placeholder
 
     return (
       <Fragment>
         <SectionHeaderStyle>
           <Header align='start'>
-            <Heading align='start'>Env mapping</Heading>
+            <Box flex='grow'>
+              <Heading align='start'>Env mapping</Heading>
+            </Box>
+            <Form>
+              <FormField label='namespace'>
+                <TextInput placeHolder={ph.namespace} onDOMChange={this.onChangeNS} value={input.namespace} />
+              </FormField>
+            </Form>
           </Header>
         </SectionHeaderStyle>
-        <Form pad="medium">
-          <FormField label='namespace'>
-            <TextInput placeHolder={placeholder.namespace} onDOMChange={this.onChangeNS} />
-          </FormField>
-        </Form>
         <Tiles fill={true}>
           <Tile>
-            <EnvForm type='configmap' placeholder={placeholder.cm} onChange={this.onChangeCm} />
+            <EnvForm type='configmap' placeholder={ph.cm} onChange={this.onChangeCm} value={input.cm} />
           </Tile>
           <Tile>
-            <EnvForm type='secret' placeholder={placeholder.secret} onChange={this.onChangeSecret} />
+            <EnvForm type='secret' placeholder={ph.secret} onChange={this.onChangeSecret} value={input.secret} />
           </Tile>
         </Tiles>
         <Tiles fill={true}>

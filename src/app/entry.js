@@ -2,16 +2,10 @@
 import 'grommet/scss/vanilla/index';
 
 import React, { Component } from 'react';
-import App from 'grommet/components/App';
-import Box from 'grommet/components/Box';
-import Split from 'grommet/components/Split';
-import Header from 'grommet/components/Header';
-import Footer from 'grommet/components/Footer';
-import Meter from 'grommet/components/Meter';
-import Title from 'grommet/components/Title';
-import Value from 'grommet/components/Value';
+import Grommet, { App, Anchor, Box, Split, Header, Footer, Title, Value } from 'grommet'
 import AppMenu from './app-menu'
 import EnvMapper from '../recipe/env-mapper'
+const { SocialGithubIcon } = Grommet.Icons.Base;
 
 export default class Entry extends Component {
   render() {
@@ -24,6 +18,12 @@ export default class Entry extends Component {
             justify='start'>
             A kitchen to cook k8s objects
           </Box>
+          <Anchor
+            href='https://github.com/Rainist/galley'
+            className='active'
+            target='_blank'
+            icon={<SocialGithubIcon />}
+            />
         </Header>
         <Split fixed={false} priority='right' flex='right'>
           <AppMenu />

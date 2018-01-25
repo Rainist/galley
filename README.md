@@ -20,6 +20,7 @@ https://rainist.github.io/galley
 - [Elm](http://elm-lang.org)
 - [Webpack](https://webpack.js.org)
 - [grommet.io](http://grommet.io/)
+- [RxJS](http://reactivex.io/rxjs/)
 - And others as described in [package.json](./package.json)
 
 

@@ -18,6 +18,8 @@ https://rainist.github.io/galley
 ## Technologies
 - [React](https://reactjs.org)
 - [React Router](https://reacttraining.com)
+- [ReasonML](https://reasonml.github.io)
+- [BuckleScript](https://bucklescript.github.io)
 - [Elm](http://elm-lang.org)
 - [Webpack](https://webpack.js.org)
 - [grommet.io](http://grommet.io/)

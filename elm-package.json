@@ -5,7 +5,7 @@
     "homepage": "https://rainist.github.io/galley",
     "license": "MIT",
     "source-directories": [
-        "src"
+        "src/Elm"
     ],
     "exposed-modules": [],
     "dependencies": {

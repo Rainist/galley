@@ -1,9 +1,9 @@
-port module Elm.Recipe.EnvMapper.Update exposing (Msg(..), update, listen)
+port module Recipe.EnvMapper.Update exposing (Msg(..), update, listen)
 
 import Focus exposing ((=>), Focus, create, set)
-import Elm.Recipe.EnvMapper.Init exposing (initialInputs)
-import Elm.Recipe.EnvMapper.Model exposing (Model, Results, Inputs)
-import Elm.Recipe.EnvMapper.Generator exposing (gen)
+import Recipe.EnvMapper.Init exposing (initialInputs)
+import Recipe.EnvMapper.Model exposing (Model, Results, Inputs)
+import Recipe.EnvMapper.Generator exposing (gen)
 
 port listen : (Inputs -> msg) -> Sub msg
 port echo : Results -> Cmd msg

@@ -1,5 +1,5 @@
 import Rx from 'rxjs/Rx'
-import { Elm } from '../../Elm/Recipe/EnvMapper/Bridge'
+import Elm from '../../Elm/Recipe/EnvMapper/Bridge'
 const Bridge = Elm.Recipe.EnvMapper.Bridge
 
 const initialModel = {

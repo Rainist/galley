@@ -1,4 +1,4 @@
-module Elm.Recipe.EnvMapper.Model exposing (Inputs, Model, Results)
+module Recipe.EnvMapper.Model exposing (Inputs, Model, Results)
 
 
 type alias ObjectInput =

@@ -13,3 +13,11 @@ node_modules
 # Desktop Services Store on macOS
 .DS_Store
 .tmuxinator.yml
+.merlin
+bin/
+dist.zip
+dist/
+lib/
+src/
+.bsb.lock
+

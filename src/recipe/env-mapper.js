@@ -1,7 +1,6 @@
 
 import * as _ from 'lodash'
-import React, { Component } from 'react';
-const Fragment = React.Fragment
+import React, { Component, Fragment } from 'react';
 import { Form, Split, Tile, Tiles, Heading, Title, Box, Card, FormField, TextInput, Header } from 'grommet'
 import styled from 'styled-components';
 import YamlViewer from '../comp/yaml-viewer'
@@ -21,13 +20,17 @@ export default class EnvMapper extends Component {
   state = { input: emptyInput, output: {} }
 
   componentDidMount() {
-    resultStream.subscribe(result => {
+    this.result$ = resultStream.subscribe(result => {
       const { cm, secret, env: snippet } = result
       const output = {cm, secret, snippet}
       this.setState({ output })
-    });
+    })
 
     this.calculate()
+  }
+
+  componentWillUnmount() {
+    this.result$.unsubscribe()
   }
 
   calculate = () => {

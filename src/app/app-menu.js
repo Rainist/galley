@@ -14,9 +14,11 @@ export default class AppMenu extends Component {
         <Box flex='grow'
           justify='start'>
           <Menu primary={true}>
-            <Anchor href='#'
-              className='active'>
-              Env mapping
+            <Anchor path={{ path: '/env-mapping', index: true }} >
+              Env Mapping
+            </Anchor>
+            <Anchor path={{ path: '/file-cm'}} >
+              File Configmap
             </Anchor>
             <Anchor href='https://github.com/rainist/galley/issues/new' target='_blank'>
               want more?

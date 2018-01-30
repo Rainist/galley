@@ -33,7 +33,7 @@
     "npm-run-all": "^4.1.2",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.13.2",
-    "webpack": "^2.7.0",
+    "webpack": "^3.10.0",
     "webpack-dev-server": "^2.11.1"
   },
   "scripts": {

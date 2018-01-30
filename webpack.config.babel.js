@@ -11,6 +11,7 @@ export default {
     extensions: ['.js', '.scss', '.css', '.json', '.elm']
   },
   plugins: [
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false

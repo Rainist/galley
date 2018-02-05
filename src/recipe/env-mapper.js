@@ -1,16 +1,17 @@
 
 import * as _ from 'lodash'
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment } from 'react'
 import { Form, Split, Tile, Tiles, Heading, Title, Box, Card, FormField, TextInput, Header } from 'grommet'
-import styled from 'styled-components';
+import styled from 'styled-components'
 import YamlViewer from '../comp/yaml-viewer'
 import EnvForm from '../comp/env-form'
 
 import { onChangeInput, initialModel, resultStream } from './env-mapper/data-handler'
+import { fillAorB } from '../utils/lodash+'
 
 const SectionHeaderStyle = styled.div`
   padding: 0.5em 3em 0 3em;
-`;
+`
 
 const { placeholder } = initialModel
 const emptyObject = { name: '', env: ''}
@@ -34,19 +35,9 @@ export default class EnvMapper extends Component {
   }
 
   calculate = () => {
-    const { input: oldInput } = this.state
+    const { input } = this.state
 
-    const input = _.cloneDeep(oldInput)
-    const self = this
-
-    const selectObj = (a, b) => {
-      if (_.isObject(a)){
-        return _.mergeWith(a, b, selectObj)
-      }
-      return a || b
-    }
-
-    const filledInput = _.mergeWith(input, placeholder, selectObj)
+    const filledInput = _.mergeWith(_.cloneDeep(input), placeholder, fillAorB)
 
     onChangeInput(filledInput)
   }

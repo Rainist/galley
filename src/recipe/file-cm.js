@@ -1,31 +1,92 @@
 import * as _ from 'lodash'
-import React, { Component, Fragment } from 'react';
-import { genCM } from '../reason/RecipeFileCM.bs'
+import React, { Component, Fragment } from 'react'
+import { genCM, initialModel } from '../reason/RecipeFileCM.bs'
 import YamlViewer from '../comp/yaml-viewer'
-import { Title, Box, Header } from 'grommet'
+import { Title, Box, Header, Heading, Form, FormField, TextInput, Tiles, Tile } from 'grommet'
+import styled from 'styled-components'
+import FileCMForm from '../comp/file-cm-form'
+import { fillAorB } from '../utils/lodash+'
 
-const sampleContent = 'file: yaml\nkey: value'
-const sampleCM = genCM('my-name', 'my-namespace', 'filename.yml', sampleContent)
+const emptyInput = { name: '', namespace: '', file: { name: '', content: '' } }
 
-const FileCM = (props) => {
+const SectionHeaderStyle = styled.div`
+  padding: 0.5em 3em 0 3em;
+`
+
+const TextInputSingleForm = (props) => {
+  const { placeholder, onChange, value, label } = props
+
   return (
-    <Fragment>
-      <Header pad="medium">
-        <Title>
-          File CM
-        </Title>
-        <div>
-          is going to generate yaml file like the sample below
-        </div>
-      </Header>
-      <Box pad="medium">
-        <YamlViewer title='sample result' codeText={sampleCM || ''} />
-      </Box>
-      <Box pad="medium">
-        The actual ui will be added soon
-      </Box>
-    </Fragment>
+    <Form pad="medium">
+      <FormField label={label}>
+        <TextInput placeHolder={placeholder} onDOMChange={onChange} value={value} />
+      </FormField>
+    </Form>
   )
 }
+export default class FileCM extends Component {
+  state = { input: emptyInput, output: '' }
 
-export default FileCM
+  componentDidMount() {
+    this.calculate()
+  }
+
+  calculate = () => {
+    const { input } = this.state
+    const { placeholder } = initialModel
+
+    const filledInput = _.mergeWith(_.cloneDeep(input), placeholder, fillAorB)
+
+    const { name, namespace, file } = filledInput
+    const output = genCM(name, namespace, file.name, file.content)
+
+    this.setState({ output })
+  }
+
+  onChangeName = ({ target: { value: name }}) => {
+    const input = { ...this.state.input, name }
+    this.setState({ input }, () => this.calculate())
+  }
+  onChangeNS = ({ target: { value: namespace }}) => {
+    const input = { ...this.state.input, namespace }
+    this.setState({ input }, () => this.calculate())
+  }
+
+  onChangeFile = (file) => {
+    const input = { ...this.state.input, file }
+    this.setState({ input }, () => this.calculate())
+  }
+
+  render() {
+    const { input, output } = this.state
+    const ph = initialModel.placeholder
+
+    return (
+      <Fragment>
+        <SectionHeaderStyle>
+          <Header align='start'>
+            <Box flex='grow'>
+              <Heading align='start'>File Configmap</Heading>
+            </Box>
+          </Header>
+        </SectionHeaderStyle>
+        <Tiles fill={true}>
+          <Tile>
+            <TextInputSingleForm label='name' placeholder={ph.name} onChange={this.onChangeName} value={input.name} />
+          </Tile>
+          <Tile>
+            <TextInputSingleForm label='namespace' placeholder={ph.namespace} onChange={this.onChangeNS} value={input.namespace} />
+          </Tile>
+        </Tiles>
+        <Tiles fill={true}>
+          <Tile>
+            <FileCMForm type='file' placeholder={ph.file} onChange={this.onChangeFile} value={input.file} />
+          </Tile>
+          <Box pad="medium">
+            <YamlViewer title='configmap' codeText={output || ''} />
+          </Box>
+        </Tiles>
+      </Fragment>
+    )
+  }
+}

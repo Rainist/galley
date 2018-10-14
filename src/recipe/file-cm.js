@@ -1,11 +1,26 @@
 import * as _ from 'lodash'
 import React, { Component, Fragment } from 'react'
-import { genCM, initialModel } from '../reason/RecipeFileCM.bs'
+import { fileCM } from 'galley-recipes'
 import YamlViewer from '../comp/yaml-viewer'
 import { Title, Box, Header, Heading, Form, FormField, TextInput, Tiles, Tile } from 'grommet'
 import styled from 'styled-components'
 import FileCMForm from '../comp/file-cm-form'
 import { fillAorB } from '../utils/lodash+'
+
+function genCM(name, namespace, filename, filecontent){
+  return fileCM.generate({ name, namespace, filename, filecontent });
+};
+
+const initialModel = {
+  placeholder: {
+    namespace: 'my-namespace',
+    name: 'new-cm',
+    file: {
+      name: 'file.txt',
+      content: 'write something here'
+    }
+  }
+};
 
 const emptyInput = { name: '', namespace: '', file: { name: '', content: '' } }
 

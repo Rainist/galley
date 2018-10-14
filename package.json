@@ -9,6 +9,7 @@
     "url": "https://github.com/rainist/galley.git"
   },
   "dependencies": {
+    "galley-recipes": "^1.0.0-d0",
     "grommet": "^1.10.0",
     "lodash": "^4.17.4",
     "react": "^16.2.0",

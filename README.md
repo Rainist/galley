@@ -16,11 +16,9 @@ https://rainist.github.io/galley
 [any contributions are welcome.](https://github.com/rainist/galley/issues/new)
 
 ## Technologies
+- [galley-recipes](https://github.com/rainist/galley-recipes)
 - [React](https://reactjs.org)
 - [React Router](https://reacttraining.com)
-- [ReasonML](https://reasonml.github.io)
-- [BuckleScript](https://bucklescript.github.io)
-- [Elm](http://elm-lang.org)
 - [Webpack](https://webpack.js.org)
 - [grommet.io](http://grommet.io/)
 - [RxJS](http://reactivex.io/rxjs/)

@@ -1,6 +1,8 @@
 import Rx from 'rxjs/Rx'
-import Elm from '../../Elm/Recipe/EnvMapper/Bridge'
-const Bridge = Elm.Recipe.EnvMapper.Bridge
+
+import { envMapper } from 'galley-recipes'
+
+const { generate } = envMapper;
 
 const initialModel = {
   placeholder: {
@@ -14,32 +16,38 @@ const initialModel = {
       env: 'key=value\nkey2=value2'
     }
   }
+};
+
+const resultStream = new Rx.Subject();
+const inputStream = new Rx.Subject().sampleTime(100);
+
+function processOutput(output) {
+  const { cm, secret, envSnippet, errMsg } = output;
+
+  let result = { cm, secret, env: envSnippet };
+
+  if (errMsg) {
+    console.error(errMsg);
+    result = { cm: errMsg, secret: errMsg, env: errMsg };
+  }
+
+  resultStream.next(result);
 }
 
-const resultStream = new Rx.Subject().sampleTime(100)
+inputStream.subscribe(input => {
+  const {
+    namespace,
+    cm: { name: cmName, env: cmEnv },
+    secret: { name: secretName, env: secretEnv}
+  } = input;
 
-const bridge = Bridge.worker()
+  const output = generate({ namespace, cmName, cmEnv, secretName, secretEnv });
 
-function listener(results) {
-  resultStream.next(results)
-}
-
-function startListening() {
-  bridge.ports.echo.subscribe(listener)
-}
-
-function sendInput(msg) {
-  bridge.ports.listen.send(msg)
-}
+  processOutput(output);
+});
 
 const onChangeInput = (input) => {
-  const transformedModel = _.chain(input).omit('namespace').mapValues(({ name, env }) => (
-    { name, content: env, namespace: input.namespace }
-  )).value()
-
-  sendInput(transformedModel)
+  inputStream.next(input);
 }
-
-startListening(listener)
 
 export { onChangeInput, initialModel, resultStream }

@@ -3,7 +3,7 @@
 A kitchen to cook k8s objects
 
 ## Why?
-Cause some times you want some recipes ready to cook things faster
+Because some times you want some recipes ready to cook things faster
 
 ## Use it here
 https://rainist.github.io/galley

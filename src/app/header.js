@@ -1,28 +1,35 @@
-import React, { Component } from 'react';
-import Grommet, { Anchor, Box, Header, Title } from 'grommet'
-const { SocialGithubIcon } = Grommet.Icons.Base;
+import React from "react";
+import { Anchor, Box, Text } from "grommet";
+import { Github } from "grommet-icons";
 
-const AppHeader = (props) => {
+const AppHeader = props => {
   return (
-    <Header direction="row" justify="between" size="large"
-      pad={{ horizontal: 'medium' }}>
-      <Title>
-        <Anchor path={{ path: '/', index: true }} >
-          Galley
-        </Anchor>
-      </Title>
-      <Box flex='grow'
-        justify='start'>
+    <Box
+      tag="header"
+      direction="row"
+      justify="between"
+      size="large"
+      pad={{ horizontal: "medium" }}
+      align="center"
+    >
+      <Box>
+        <Text size="large" weight="bold">
+          <Anchor path={{ path: "/", index: true }}>Galley</Anchor>
+        </Text>
+      </Box>
+      <Box flex="grow" justify="start" pad={{ horizontal: "large" }}>
         A kitchen to cook k8s objects
       </Box>
-      <Anchor
-        href='https://github.com/Rainist/galley'
-        className='active'
-        target='_blank'
-        icon={<SocialGithubIcon />}
+      <Box>
+        <Anchor
+          href="https://github.com/Rainist/galley"
+          className="active"
+          target="_blank"
+          icon={<Github />}
         />
-    </Header>
-  )
-}
+      </Box>
+    </Box>
+  );
+};
 
-export default AppHeader
+export default AppHeader;

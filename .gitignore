@@ -17,3 +17,4 @@ node_modules
 .bsb.lock
 lib/bs
 dist.zip
+yarn-error.log

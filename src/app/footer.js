@@ -1,15 +1,22 @@
-import React, { Component } from 'react';
-import Grommet, { Footer } from 'grommet'
+import React from "react";
+import { Box, Anchor } from "grommet";
 
-const AppFooter = (props) => {
+const AppFooter = props => {
   return (
-    <Footer primary={true} appCentered={true} direction="column"
-      align="center" pad="small" colorIndex="grey-1">
+    <Box tag="footer" align="center" pad="small" background="dark-1">
       <p>
-        Built with ❤️ by <a href="https://rainist.com" target="_blank">Rainist</a>!
+        Built with{" "}
+        <span role="img" aria-label="heart">
+          ❤️
+        </span>{" "}
+        by{" "}
+        <Anchor color="white" href="https://rainist.com" target="_blank">
+          Rainist
+        </Anchor>
+        !
       </p>
-    </Footer>
-  )
-}
+    </Box>
+  );
+};
 
-export default AppFooter
+export default AppFooter;

@@ -1,14 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from "react";
 
-const Toggler = (props) => {
-  const shouldShow = props.show
-  const children = shouldShow? props.children : null
+const Toggler = props => {
+  const shouldShow = props.show;
+  const children = shouldShow ? props.children : null;
 
-  return (
-    <Fragment>
-      {children}
-    </Fragment>
-  )
-}
+  return <Fragment>{children}</Fragment>;
+};
 
-export default Toggler
+export default Toggler;

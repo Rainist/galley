@@ -1,75 +1,108 @@
-import React, { Component } from 'react';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/styles/hljs';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
+import React, { Component } from "react";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
-import { Label, Button, Box, Card, Icons, Tip } from 'grommet'
-import Toggler from './toggler'
-import { setTimeout } from 'timers';
+import { Layer, Text, Button, Box } from "grommet";
+import Toggler from "./toggler";
+import { setTimeout } from "timers";
 
-const { Base: { Clipboard: ClipboardIcon } } = Icons
+import { safeLoad } from "js-yaml";
 
-const CopyButton = (props) => {
-  const onCopy = props.onCopy || (() => console.log(copied))
+import { Clipboard } from "grommet-icons";
+
+const CopyButton = props => {
+  const onCopy = props.onCopy || (copied => console.log(copied));
 
   return (
-    <CopyToClipboard text={props.codeText}
-      onCopy={onCopy}>
-      <Button id={props.id} icon={<ClipboardIcon />}
-         />
+    <CopyToClipboard text={props.copyText} onCopy={onCopy}>
+      <Button id={props.id} icon={<Clipboard />} />
     </CopyToClipboard>
-  )
-}
+  );
+};
 
-const Yaml = (props) => {
-  return <SyntaxHighlighter language='yaml' style={docco}>{props.codeText}</SyntaxHighlighter>;
-}
+const Code = props => {
+  const { format, codeText } = props;
+  const output = codeOutput(format, codeText);
 
-let _viewerKey = 0
+  return (
+    <SyntaxHighlighter language={format} style={docco}>
+      {output}
+    </SyntaxHighlighter>
+  );
+};
+
+const codeOutput = (format, yaml) => {
+  const isJson = format === "json" ? true : false;
+
+  if (yaml.length === 0) return "";
+  if (!isJson) return yaml;
+
+  let json;
+  try {
+    json = safeLoad(yaml);
+    const text = JSON.stringify(json, null, 2);
+    return text;
+  } catch (error) {
+    return "failed to transform from yaml to json";
+  }
+};
+
+let _viewerKey = 0;
 function viewerKey() {
-  return ++_viewerKey
+  return ++_viewerKey;
 }
 
 export default class YamlViewer extends Component {
   state = {
-    showCopied: false,
+    showCopied: false
   };
 
   onCopy = () => {
-    this.setState({ showCopied: true })
+    this.setState({ showCopied: true });
 
     setTimeout(() => {
-      this.setState({ showCopied: false })
-    }, 500)
-  }
+      this.setState({ showCopied: false });
+    }, 800);
+  };
 
   render() {
-    const { state, props } = this
-    const { codeText } = props
-    const tipId = `tip-target-uniq-${viewerKey()}`
+    const { state, props } = this;
+    const { codeText, format } = props;
 
-    const onCopy = this.onCopy
+    const tipId = `tip-target-uniq-${viewerKey()}`;
 
-    const label = <Box direction='row' align='center'>
-      <Box flex={true}><Label uppercase={true} margin='none'> {props.title} </Label></Box>
-      <CopyButton id={tipId} codeText={codeText} onCopy={onCopy}/>
-    </Box>
+    const onCopy = this.onCopy;
+
+    const copyText = codeOutput(format, codeText);
+
+    const label = (
+      <Box direction="row" align="center">
+        <Box flex={true}>
+          <Text uppercase={true} margin="none">
+            {" "}
+            {props.title}{" "}
+          </Text>
+        </Box>
+        <Box>
+          <CopyButton id={tipId} copyText={copyText} onCopy={onCopy} />
+        </Box>
+      </Box>
+    );
 
     return (
-      <Box
-        align='center'
-        margin='small'>
-        <Card
-          label={label}
-          >
-          <Yaml codeText={codeText} />
-        </Card>
+      <Box align="center" margin="small">
+        <Box tag="header">{label}</Box>
+        <Box>
+          <Code codeText={codeText} format={format} />
+        </Box>
         <Toggler show={state.showCopied}>
-          <Tip target={tipId} onClose={() => true}>
+          <Layer>Copied to Clipboard</Layer>
+          {/*<Tip target={tipId} onClose={() => true}>
             Copied
-          </Tip>
+    </Tip>*/}
         </Toggler>
       </Box>
-    )
+    );
   }
 }

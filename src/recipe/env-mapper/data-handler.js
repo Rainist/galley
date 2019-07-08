@@ -1,19 +1,19 @@
-import Rx from 'rxjs/Rx'
+import Rx from "rxjs/Rx";
 
-import { envMapper } from 'galley-recipes'
+import { envMapper } from "galley-recipes";
 
 const { generate } = envMapper;
 
 const initialModel = {
   placeholder: {
-    namespace: 'my-namespace',
+    namespace: "my-namespace",
     cm: {
-      name: 'new-cm',
-      env: 'key=value\nkey2=value2'
+      name: "new-cm",
+      env: "key=value\nkey2=value2"
     },
     secret: {
-      name: 'new-secret',
-      env: 'key=value\nkey2=value2'
+      name: "new-secret",
+      env: "key=value\nkey2=value2"
     }
   }
 };
@@ -34,20 +34,36 @@ function processOutput(output) {
   resultStream.next(result);
 }
 
+function trimAll(obj) {
+  const keys = Object.keys(obj);
+
+  for (const i in keys) {
+    const k = keys[i];
+    const val = obj[k];
+    if (val) {
+      obj[k] = val.trim();
+    }
+  }
+
+  return obj;
+}
+
 inputStream.subscribe(input => {
   const {
     namespace,
     cm: { name: cmName, env: cmEnv },
-    secret: { name: secretName, env: secretEnv}
+    secret: { name: secretName, env: secretEnv }
   } = input;
 
-  const output = generate({ namespace, cmName, cmEnv, secretName, secretEnv });
+  const output = generate(
+    trimAll({ namespace, cmName, cmEnv, secretName, secretEnv })
+  );
 
   processOutput(output);
 });
 
-const onChangeInput = (input) => {
+const onChangeInput = input => {
   inputStream.next(input);
-}
+};
 
-export { onChangeInput, initialModel, resultStream }
+export { onChangeInput, initialModel, resultStream };

@@ -49,12 +49,12 @@ export default class AppMenu extends Component {
         </Box>
         <Box flex="grow" direction="column" justify="start">
           <Box pad="small" background={emBg}>
-            <Anchor color={emFg} href="/#/env-mapping">
+            <Anchor color={emFg} href="#/env-mapping">
               Env Mapping
             </Anchor>
           </Box>
           <Box pad="small" background={fcBg}>
-            <Anchor color={fcFg} href="/#/file-cm">
+            <Anchor color={fcFg} href="#/file-cm">
               File Configmap
             </Anchor>
           </Box>
